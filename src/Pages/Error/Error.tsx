@@ -16,7 +16,7 @@ const Error: React.FC = () => {
 
         {/* المحتوى */}
         <div className="relative z-10 text-center w-4/5 mx-auto mt-24">
-          <div className="text-[220px] text-[#145DB8] leading-none tracking-[15px] inline-block font-bold">
+          <div className="text-[220px] text-3xl text-[#145DB8] leading-none tracking-[15px] inline-block font-bold">
             404
           </div>
           <hr className="border-t-4 border-white w-[420px] mx-auto my-2 relative" />
