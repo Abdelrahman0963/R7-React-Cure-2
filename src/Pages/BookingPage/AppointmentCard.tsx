@@ -15,6 +15,7 @@ interface AppointmentProps {
     doctorImage?: string;
     location: string;
   };
+  onCancel?: (id: number) => void;
 }
 
 const AppointmentCard: React.FC<AppointmentProps> = ({ appointment }) => {
