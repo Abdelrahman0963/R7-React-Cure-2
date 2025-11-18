@@ -4,24 +4,22 @@ import AppointmentCard from "./AppointmentCard";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 
-interface AppointmentProps {
-    appointment: {
-        id: number;
-        doctorId: number;
-        date: string;
-        status: string;
-        doctorName: string;
-        specialization: string;
-        doctorImage?: string;
-        location: string;
-    };
-    onCancel?: (id: number) => void;  
-}
+interface Appointment {
+    id: number;
+    date: string;
+    status: "upcoming" | "completed" | "canceled";
+    doctorName: string;
+    specialization: string;
+    doctorImage?: string;
+    location: string;
+    doctorId: number;
 
+}
 
 interface AppointmentsListProps {
     tab: string;
     date: Date | null;
+
 }
 
 const AppointmentsList: React.FC<AppointmentsListProps> = ({ tab, date }) => {
@@ -29,7 +27,7 @@ const AppointmentsList: React.FC<AppointmentsListProps> = ({ tab, date }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [cancelId, setCancelId] = useState<number | null>(null);
-   console.log(error)
+    console.log(error)
     const token = Cookies.get("accessToken");
 
     useEffect(() => {
@@ -86,15 +84,15 @@ const AppointmentsList: React.FC<AppointmentsListProps> = ({ tab, date }) => {
         tab === "All"
             ? appointments
             : appointments.filter(
-                  (a) => a.status === tab.toLowerCase()
-              );
+                (a) => a.status === tab.toLowerCase()
+            );
 
     const finalAppointments = date
         ? filteredAppointments.filter(
-              (a) =>
-                  new Date(a.date).toDateString() ===
-                  date.toDateString()
-          )
+            (a) =>
+                new Date(a.date).toDateString() ===
+                date.toDateString()
+        )
         : filteredAppointments;
 
     const handleConfirmCancel = () => {
