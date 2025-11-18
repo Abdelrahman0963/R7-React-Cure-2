@@ -4,16 +4,20 @@ import AppointmentCard from "./AppointmentCard";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 
-interface Appointment {
-    id: number;
-    date: string;
-    status: "upcoming" | "completed" | "canceled";
-    doctorName: string;
-    specialization: string;
-    doctorImage?: string;
-    location: string;
-    doctorId: number;
+interface AppointmentProps {
+    appointment: {
+        id: number;
+        doctorId: number;
+        date: string;
+        status: string;
+        doctorName: string;
+        specialization: string;
+        doctorImage?: string;
+        location: string;
+    };
+    onCancel?: (id: number) => void;  
 }
+
 
 interface AppointmentsListProps {
     tab: string;
