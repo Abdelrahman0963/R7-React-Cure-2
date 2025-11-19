@@ -42,13 +42,14 @@ const Google: React.FC = () => {
     const onError = () => {
         console.log("❌ Google Login Failed");
     };
+    const resize = () => (window.innerWidth > 500 ? 400 : 300);
 
     return (
         <div className="flex justify-center w-full">
             <GoogleLogin
                 onSuccess={onSuccess}
                 onError={onError}
-                width={400}
+                width={resize()}
                 text="signin_with"
             />
         </div>
