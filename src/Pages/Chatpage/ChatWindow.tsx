@@ -21,17 +21,17 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ selectedUser, onToggleFavourite
 
     useEffect(() => {
         if (selectedUser) {
-            const initialMessage = selectedUser.lastMessageContent || "لا توجد رسائل بعد";
-            const senderType = selectedUser.isLastMessageSentByPatient ? "me" : "other";
-
-            setMessages([
-                {
+            // مش هنعرض رسالة افتراضية داخل الشات
+            const chatMessages: Message[] = [];
+            if (selectedUser.lastMessageContent && selectedUser.lastMessageContent !== "") {
+                chatMessages.push({
                     id: Date.now(),
-                    sender: senderType,
-                    content: initialMessage,
+                    sender: selectedUser.isLastMessageSentByPatient ? "me" : "other",
+                    content: selectedUser.lastMessageContent,
                     time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-                },
-            ]);
+                });
+            }
+            setMessages(chatMessages);
         }
     }, [selectedUser]);
 
@@ -72,11 +72,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ selectedUser, onToggleFavourite
     if (!selectedUser) {
         return (
             <div className="flex flex-col items-center justify-center w-2/3 h-full bg-gray-50 text-center">
-                <img
-                    src="https://cdn-icons-png.flaticon.com/512/4076/4076500.png"
-                    alt="No chat"
-                    className="w-24 h-24 mb-4 opacity-60"
-                />
+                <img src="https://cdn-icons-png.flaticon.com/512/4076/4076500.png" alt="No chat" className="w-24 h-24 mb-4 opacity-60" />
                 <h3 className="text-gray-500 text-lg font-medium">اختر محادثة لبدء الدردشة</h3>
                 <p className="text-gray-400 text-sm mt-1">لا توجد رسائل لعرضها حالياً</p>
             </div>
@@ -88,30 +84,26 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ selectedUser, onToggleFavourite
             {/* Header */}
             <div className="flex items-center gap-3 bg-white border-b px-4 py-3 shadow-sm justify-between">
                 <div className="flex items-center gap-3">
-                    <img src={selectedUser.img} alt={selectedUser.doctorName} className="w-10 h-10 rounded-full object-cover" />
+                    <div className="w-10 h-10 rounded-full bg-gray-700 overflow-hidden flex items-center justify-center text-white font-bold">
+                        {!selectedUser.img && selectedUser.doctorName[0]}
+                        {selectedUser.img && <img src={selectedUser.img} alt={selectedUser.doctorName} className="w-full h-full object-cover" />}
+                    </div>
                     <div>
                         <h3 className="font-semibold text-sm">{selectedUser.doctorName}</h3>
                         <p className="text-xs text-green-500">متصل الآن</p>
                     </div>
                 </div>
                 {/* أيقونة القلب */}
-                <div
-                    className="cursor-pointer text-red-500 text-xl"
-                    onClick={() => onToggleFavourite && onToggleFavourite(selectedUser)}
-                >
+                <div className="cursor-pointer text-red-500 text-xl" onClick={() => onToggleFavourite && onToggleFavourite(selectedUser)}>
                     {selectedUser.isFavourite ? "❤️" : "🤍"}
                 </div>
             </div>
 
             {/* Messages */}
             <div className="flex-1 overflow-y-auto px-4 py-3 space-y-3">
-                {messages.length > 0 ? (
-                    messages.map((msg) => (
-                        <MessageItem key={msg.id} sender={msg.sender} content={msg.content} time={msg.time} />
-                    ))
-                ) : (
-                    <p className="text-center text-gray-400 text-sm mt-5">لا توجد رسائل بعد</p>
-                )}
+                {messages.map((msg) => (
+                    <MessageItem key={msg.id} sender={msg.sender} content={msg.content} time={msg.time} />
+                ))}
                 <div ref={messagesEndRef} />
             </div>
 
@@ -122,3 +114,4 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ selectedUser, onToggleFavourite
 };
 
 export default ChatWindow;
+// زززززززززززززز

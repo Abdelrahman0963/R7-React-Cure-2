@@ -1,15 +1,24 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-// ضع هنا التوكن الصحيح
-const TOKEN = ` ${Cookies.get("acssessToken")}`
 
-// رابط السيرفر الأساسي
+const TOKEN = `${Cookies.get("accessToken")}`;
 const BASE_URL = "https://cure-doctor-booking.runasp.net/";
 
 const axiosInstance = axios.create({
     baseURL: BASE_URL,
     headers: { Authorization: `Bearer ${TOKEN}` },
 });
+
+// ------------------ GET ALL DOCTORS ------------------
+export const getAllDoctors = async () => {
+    try {
+        const response = await axiosInstance.get("api/Customer/Doctors/GetAllDoctors");
+        return response.data.data;
+    } catch (error) {
+        console.error("Error fetching doctors:", error);
+        return [];
+    }
+};
 
 // ------------------ GET CHATS ------------------
 export const getChats = async () => {
@@ -55,17 +64,6 @@ export const searchUnreadChats = async (query: string) => {
     }
 };
 
-// ------------------ GET FAVOURITE CHATS ------------------
-export const getFavouriteChats = async () => {
-    try {
-        const response = await axiosInstance.get("api/chat/chat/send");
-        return response.data.data;
-    } catch (error) {
-        console.error("Error fetching favourite chats:", error);
-        return { chatListDTOs: [], doctorsListDTO: [] };
-    }
-};
-
 // ------------------ START CHAT ------------------
 export const startChat = async (receiverId: string) => {
     try {
@@ -76,8 +74,6 @@ export const startChat = async (receiverId: string) => {
         return null;
     }
 };
-
-
 
 // ------------------ SEND MESSAGE ------------------
 export const sendMessage = async (senderId: string, receiverId: string, chatId: number, message: string) => {
@@ -94,3 +90,4 @@ export const sendMessage = async (senderId: string, receiverId: string, chatId: 
         return null;
     }
 };
+// ررررررررررررر
