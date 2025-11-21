@@ -35,7 +35,7 @@ const Faq: React.FC = () => {
     if (error) return <div>Error: {error}</div>;
 
     return (
-        <section className="w-full min-h-screen flex flex-col items-center justify-center gap-6 px-6 md:px-12 py-10 bg-white relative z-10">
+        <section className="w-full min-h-screen flex flex-col items-center justify-center gap-6 px-6 md:px-12 md:py-6 py-4 bg-white relative z-10">
             <div className="bg-[#E8EFF8] px-4 py-1 rounded-full text-[#145DB8] text-sm font-medium">
                 Frequently Asked Questions
             </div>
